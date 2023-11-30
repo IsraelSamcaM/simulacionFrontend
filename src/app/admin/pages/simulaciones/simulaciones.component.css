@@ -22,3 +22,9 @@
   table {
     width: 100%;
   } 
+
+  mat-divider {
+    margin-top: 10px; 
+  }
+
+  

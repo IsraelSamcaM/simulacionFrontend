@@ -12,9 +12,11 @@ import {Chart} from 'chart.js/auto';
 export class SimulacionesComponent implements OnInit {
 
   displayedColumns = ['numIntervalo' ,'intervaloInferior','intervaloSuperior','frecuencia','porcentaje']
+  displayedColumnsAcum = ['numIntervalo' ,'intervaloInferior','intervaloSuperior','frecuencia acumulada','porcentaje']
   dataSource = new MatTableDataSource<any>([]);
+  dataSourceAcum = new MatTableDataSource<any>([]);
 
-  FormSimulacion: FormGroup;
+  FormSimulacion: FormGroup;  
   AFpesismista: number;
   AFprobable: number;
   AFoptimista: number;
@@ -61,11 +63,17 @@ export class SimulacionesComponent implements OnInit {
   FAIsimulados: number[] = [];
 
   data: number[] = []
+  data2: number[] = []
   labels: string[]=[]
 
   numeroIteraciones: number;
-  
   intervalos: any[]=[];
+  acumulados: any[]=[];
+
+  TREMA: number;
+  alfa: number;
+  aprobado: boolean = true;
+  simulado: boolean = false;
 
   constructor(private fb: FormBuilder) {
     
@@ -105,6 +113,9 @@ export class SimulacionesComponent implements OnInit {
 
       cantidadIteraciones:['1000', Validators.required],
       tasaImpuestos:['0.5', Validators.required],
+      TREMA:['0.15', Validators.required],
+      alfa:['0.9', Validators.required],
+
       TIRmaxima: [''],
       TIRminima: [''],
     });
@@ -136,9 +147,17 @@ export class SimulacionesComponent implements OnInit {
         label: 'Porcentaje de TIRs simulados',
         data: this.data,
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(17, 255, 54)',
         tension: 0.1
-      }]
+      },
+      {
+        label: 'Porcentaje de TIRs simulados acumulados',
+        data: this.data2,
+        fill: false,
+        borderColor: 'rgb(214, 17, 255)',
+        tension: 0.1
+      },
+      ]
     };
     
     this.chart =  new Chart("chart2",{
@@ -186,12 +205,9 @@ export class SimulacionesComponent implements OnInit {
         const pesimista = this.FormSimulacion.get(`TAIpesismista${i}`)?.value;
         const probable = this.FormSimulacion.get(`TAIprobable${i}`)?.value;
         const optimista = this.FormSimulacion.get(`TAIoptimista${i}`)?.value;
-      
         const valorSimulado = this.simularTriangular(pesimista, probable, optimista);
-      
         this.TAIsimulados.push(valorSimulado);
       }
-
       for(let i=0;i<5;i++){
         const pesimista = this.FormSimulacion.get(`FAIpesismista`)?.value;
         const probable = this.FormSimulacion.get(`FAIprobable`)?.value;
@@ -199,9 +215,10 @@ export class SimulacionesComponent implements OnInit {
         const TAIsimulado = this.simularTriangular(pesimista,probable,optimista);
         this.FAIsimulados.push(TAIsimulado);
       }
-      
       this.numeroIteraciones = this.FormSimulacion.get('cantidadIteraciones')?.value || '';
       this.tasaImpuestos = this.FormSimulacion.get('tasaImpuestos')?.value || '';
+      this.TREMA = this.FormSimulacion.get('TREMA')?.value || '';
+      this.alfa = this.FormSimulacion.get('alfa')?.value || '';
       //console.log(this.FAIsimulados)
   }
   
@@ -240,12 +257,9 @@ export class SimulacionesComponent implements OnInit {
       const pesimista = this.FormSimulacion.get(`TAIpesismista${i}`)?.value;
       const probable = this.FormSimulacion.get(`TAIprobable${i}`)?.value;
       const optimista = this.FormSimulacion.get(`TAIoptimista${i}`)?.value;
-    
       const valorSimulado = this.simularTriangular(pesimista, probable, optimista);
-    
       this.TAIsimulados.push(valorSimulado);
     }
-
     for(let i=0;i<5;i++){
       const pesimista = this.FormSimulacion.get(`FAIpesismista`)?.value;
       const probable = this.FormSimulacion.get(`FAIprobable`)?.value;
@@ -254,25 +268,43 @@ export class SimulacionesComponent implements OnInit {
       this.FAIsimulados.push(TAIsimulado);
     }
   }
-  simular(){
-    this.labels=[]
-    this.data=[]
 
-    this.numeroIteraciones = this.FormSimulacion.get('cantidadIteraciones')?.value || '';
-    this.tasaImpuestos = this.FormSimulacion.get('tasaImpuestos')?.value || '';
-    
-    this.intervalos=[]
-    const frecuenciaPorIntervalo: number[] = new Array(20).fill(0);
-    let TIRsimuladas: number[] = new Array(this.numeroIteraciones)
-    let numInteracion: number = 0
-    for (let i = 0; i < this.numeroIteraciones; i++) {
+  simular(){
+      this.simulado = true
+      this.labels=[]
+      this.data=[]
+      this.data2=[]
+
+      this.numeroIteraciones = this.FormSimulacion.get('cantidadIteraciones')?.value || '';
+      this.tasaImpuestos = this.FormSimulacion.get('tasaImpuestos')?.value || '';
       
-      let simulado: number = this.iterar(this.AFsimulado, this.ACsimulado, this.FAIsimulados, this.TAIsimulados,
-      this.tasaImpuestos, this.TIRminima, this.TIRmaxima);
-      TIRsimuladas[i] = simulado;  
-      this.actualizarSimulados();
-      this.clasificarTIR(frecuenciaPorIntervalo, this.intervalosTIR, TIRsimuladas[i]);
-    }
+      this.intervalos=[]
+      this.acumulados=[]
+
+      const frecuenciaPorIntervalo: number[] = new Array(20).fill(0);
+
+      let TIRsimuladas: number[] = new Array(this.numeroIteraciones)
+      let numInteracion: number = 0
+
+      for (let i = 0; i < this.numeroIteraciones; i++) {
+        let simulado: number = this.iterar(this.AFsimulado, this.ACsimulado, this.FAIsimulados, this.TAIsimulados,
+        this.tasaImpuestos, this.TIRminima, this.TIRmaxima);
+        if(simulado>this.TIRminima && simulado < this.TIRmaxima){
+          TIRsimuladas[i] = simulado; 
+        }
+        this.actualizarSimulados();
+        this.clasificarTIR(frecuenciaPorIntervalo, this.intervalosTIR, TIRsimuladas[i]);
+      }
+
+      let frecuenciaAcumulada: number[] = new Array(20);
+      for (let i = 0; i < 20; i++) {
+          if (i === 0) {
+              frecuenciaAcumulada[i] = frecuenciaPorIntervalo[i];
+          } else {
+              frecuenciaAcumulada[i] = frecuenciaAcumulada[i - 1] + frecuenciaPorIntervalo[i];
+          }
+      }
+
       for (let i = 0; i < 20; i++) {
           const porcentaje: number = (frecuenciaPorIntervalo[i] / this.numeroIteraciones) * 100;
           numInteracion++
@@ -284,30 +316,67 @@ export class SimulacionesComponent implements OnInit {
             porcentaje: porcentaje
           };
           this.intervalos.push(intervaloObj);
-
           this.labels.push("Intervalo "+intervaloObj.numIntervalo.toString());
           this.data.push(intervaloObj.porcentaje);
           
-         // console.log(`En el intervalo: ${this.intervalosTIR[i]} a ${this.intervalosTIR[i + 1]}, hay ${frecuenciaPorIntervalo[i]} TIR simuladas, con una incidencia del ${porcentaje}%.`);
       }
+      numInteracion = 0
+      for (let i = 0; i < 20; i++) {
+        const porcentaje: number = (frecuenciaAcumulada[i] / this.numeroIteraciones) * 100;
+        numInteracion++;
+        const acumuladoObj = {
+            numIntervalo: numInteracion,
+            intervaloInferior: this.intervalosTIR[i],
+            intervaloSuperior: this.intervalosTIR[i + 1],
+            frecuencia: frecuenciaPorIntervalo[i],
+            porcentaje: porcentaje
+        };
+        // console.log(
+        //     `En el intervalo: ${acumuladoObj.intervaloInferior} a ${acumuladoObj.intervaloSuperior}, la acumulada es: ${acumuladoObj.frecuencia}, es decir un ${acumuladoObj.porcentaje}% de las TIR.`
+        // )
+        this.acumulados.push(acumuladoObj);
+        this.data2.push(acumuladoObj.porcentaje);
+      }
+      console.log(this.acumulados)
+
+      if (this.TIRminima >= this.TREMA) {
+        this.aprobado = true;
+        console.log("El proyecto se aprueba, la TIR siempre supera a la TREMA");
+      } else if (this.TIRmaxima > this.TREMA) {
+          this.aprobado = true;
+          for (let i = 0; this.intervalosTIR[i] < this.TREMA; i++) {
+              if ((frecuenciaAcumulada[i] / this.numeroIteraciones) > (1 - this.alfa)) {
+                this.aprobado = false;
+              }
+          }
+          if (this.aprobado) {
+              console.log("El proyecto se aprueba, la TIR es superior a la TREMA más del 90% de las veces.");
+          } else {
+              console.log("El proyecto se rechaza, la TIR es inferior a la TREMA más del 90% de las veces.");
+          }
+      } else {
+          console.log("El proyecto se rechaza, la TIR nunca alcanza a la TREMA");
+      }
+
       console.log(this.labels)
       console.log(this.data)
       this.dataSource = new MatTableDataSource(this.intervalos) 
-      console.log("Todos los tir simulados: ");
-      console.log(TIRsimuladas) 
-      console.log(this.intervalos)  
+      this.dataSourceAcum= new MatTableDataSource(this.acumulados) 
+      //console.log("Todos los tir simulados: ");
+      //console.log(TIRsimuladas) 
+      //console.log(this.intervalos)  
       if (this.chart) {
         this.chart.destroy();
       }
-      this.graficar()  
+      this.graficar()    
   }
 
   iterar(estAF: number, estAC: number, estFAI: number[], estInfSimulados: number[], TasaImpuestos: number, TIRminima: number, TIRmaxima: number): number {
     const AF: number = estAF;
     const AC: number = estAC;
     const FAI: number[] = estFAI;
-    const Inf: number[] = [...estInfSimulados];  // Crear una copia del array
-    
+    const Inf: number[] = [...estInfSimulados];  
+   
     const FDI: number[] = new Array(5);
 
     for (let i = 0; i < 5; i++) {
@@ -331,6 +400,7 @@ export class SimulacionesComponent implements OnInit {
 
 
   calcularValoresSimulados(){
+    this.aprobado = false
     this.TAIsimulados = []
     
     this.obtenerDatos();
@@ -340,19 +410,7 @@ export class SimulacionesComponent implements OnInit {
     this.ACsimulado = this.simularTriangular(this.ACpesismista , this.ACprobable,this.ACoptimista);
     this.FAIsimulado = this.simularTriangular(this.FAIpesismista , this.FAIprobable,this.FAIoptimista);
    
-    // this.FormSimulacion.patchValue({'AFsimulado': this.AFsimulado});
-    // this.FormSimulacion.patchValue({'ACsimulado': this.ACsimulado});  
-    // this.FormSimulacion.patchValue({'FAIsimulado': this.FAIsimulado});
     this.calcularTirs()
-
-    // for (let i = 0; i < this.TAIsimulados.length; i++) {
-    //   const controlName = 'TAIsimulado' + (i + 1);
-    //   const controlValue = this.TAIsimulados[i];
-    //   this.FormSimulacion.patchValue({
-    //     [controlName]: controlValue
-    //   });
-    // }
-    //this.simular()
   }
 
   calcularFDI(periodo: number, FAI: number, Inf: number[], T: number, AF: number, AC: number): number {

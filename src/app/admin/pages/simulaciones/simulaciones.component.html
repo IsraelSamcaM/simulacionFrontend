@@ -228,16 +228,28 @@
         <div class="card w-100">
           <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-4">
+                  <div class="col-sm-2">
                     <mat-form-field appearance="fill" class="example-full-width">
                       <mat-label>Cantidad de Iteraciones</mat-label>
                       <input formControlName="cantidadIteraciones" matInput value="">
                     </mat-form-field>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-2">
                     <mat-form-field appearance="fill" class="example-full-width">
                       <mat-label>Tasa de Impuestos</mat-label>
                       <input formControlName="tasaImpuestos" matInput value="">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-2">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>TREMA</mat-label>
+                      <input formControlName="TREMA" matInput value="">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-2">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>Alfa</mat-label>
+                      <input formControlName="alfa" matInput value="">
                     </mat-form-field>
                   </div>
                     <div class="col-sm-4">
@@ -252,7 +264,7 @@
         <!-- Activo Fijo de Inicial -->
         <div class="card w-150">
           <div class="card-body">
-            <h4 class="card-title">Datos de entrada Simulados</h4>
+            <h4 class="card-title">TIR Simulados</h4>
             
             <div class="row">
               <div class="col-sm-12">
@@ -284,55 +296,120 @@
       </div>
     </div>
   </form>
-  <p>
-    <mat-toolbar>
-      <span>TABLA DE TIR's SIMULADOS</span>
-    </mat-toolbar>
-  </p>
-  <div class="row">
-    <section class="example-container mat-elevation-z8" tabindex="0">
-      <table mat-table [dataSource]="dataSource">
-    
-        <ng-container matColumnDef="numIntervalo">
-          <th mat-header-cell *matHeaderCellDef> No. Intervalo </th>
-          <td mat-cell *matCellDef="let element"> {{element.numIntervalo}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="intervaloInferior">
-          <th mat-header-cell *matHeaderCellDef> Lim. Inferior </th>
-          <td mat-cell *matCellDef="let element"> {{element.intervaloInferior}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="intervaloSuperior">
-          <th mat-header-cell *matHeaderCellDef> Lim Superior </th>
-          <td mat-cell *matCellDef="let element"> {{element.intervaloSuperior}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="frecuencia">
-          <th mat-header-cell *matHeaderCellDef> Frecuencia </th>
-          <td mat-cell *matCellDef="let element"> {{element.frecuencia}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="porcentaje">
-          <th mat-header-cell *matHeaderCellDef> Porcentaje </th>
-          <td mat-cell *matCellDef="let element"> {{(element.porcentaje) }} %</td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </section>
-  </div>
-  <p>
-    <mat-toolbar>
-      <span>GRAFICA</span>
-    </mat-toolbar>
-  </p>
   <mat-divider></mat-divider>
+  <section>
+    <p>
+      <mat-toolbar>
+        <span>TABLA DE TIR's SIMULADOS</span>
+      </mat-toolbar>
+    </p>
+  </section>
+  <div class="row">
+    <mat-tab-group>
+      <mat-tab label="First">
+        <section class="example-container mat-elevation-z8" tabindex="0">
+          <table mat-table [dataSource]="dataSource">
+        
+            <ng-container matColumnDef="numIntervalo">
+              <th mat-header-cell *matHeaderCellDef> No. Intervalo </th>
+              <td mat-cell *matCellDef="let element"> {{element.numIntervalo}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="intervaloInferior">
+              <th mat-header-cell *matHeaderCellDef> Lim. Inferior </th>
+              <td mat-cell *matCellDef="let element"> {{element.intervaloInferior}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="intervaloSuperior">
+              <th mat-header-cell *matHeaderCellDef> Lim Superior </th>
+              <td mat-cell *matCellDef="let element"> {{element.intervaloSuperior}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="frecuencia">
+              <th mat-header-cell *matHeaderCellDef> Frecuencia </th>
+              <td mat-cell *matCellDef="let element"> {{element.frecuencia}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="porcentaje">
+              <th mat-header-cell *matHeaderCellDef> Porcentaje </th>
+              <td mat-cell *matCellDef="let element"> {{(element.porcentaje) }} %</td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </section>
+      </mat-tab>
+      <mat-tab label="Second">
+        <section class="example-container mat-elevation-z8" tabindex="0">
+          <table mat-table [dataSource]="dataSourceAcum">
+        
+            <ng-container matColumnDef="numIntervalo">
+              <th mat-header-cell *matHeaderCellDef> No. Intervalo </th>
+              <td mat-cell *matCellDef="let element"> {{element.numIntervalo}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="intervaloInferior">
+              <th mat-header-cell *matHeaderCellDef> Lim. Inferior </th>
+              <td mat-cell *matCellDef="let element"> {{element.intervaloInferior}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="intervaloSuperior">
+              <th mat-header-cell *matHeaderCellDef> Lim Superior </th>
+              <td mat-cell *matCellDef="let element"> {{element.intervaloSuperior}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="frecuencia acumulada">
+              <th mat-header-cell *matHeaderCellDef> Frecuencia </th>
+              <td mat-cell *matCellDef="let element"> {{element.frecuencia}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="porcentaje">
+              <th mat-header-cell *matHeaderCellDef> Porcentaje </th>
+              <td mat-cell *matCellDef="let element"> {{(element.porcentaje) }} %</td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAcum; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsAcum;"></tr>
+          </table>
+        </section>
+      </mat-tab>
+      
+    </mat-tab-group>
+    
+  </div>
+  <mat-divider></mat-divider>
+  <section> 
+    <p>
+      <mat-toolbar>
+        <span>GRAFICA</span>
+      </mat-toolbar>
+    </p>
+  </section>
   <canvas id= "chart2"> {{chart}}</canvas>
   <p>
     <mat-toolbar>
-      
+      <mat-divider></mat-divider>
+      <span>CONCLUSIÓN</span>
     </mat-toolbar>
   </p>
+  <section>
+    <div *ngIf ="simulado">
+      <div *ngIf="aprobado; else mostrarError" class="alert alert-success" role="alert">
+        EL PROYECTO A SIDO ACEPTADO SEGUN DATOS DE SIMULACION!
+      </div>
+      <ng-template #mostrarError>
+        <div class="alert alert-danger" role="alert">
+          EL PROYECTO A SIDO RECHAZADO SEGUN DATOS DE SIMULACION!
+        </div>
+      </ng-template> 
+    </div>
+       
+  </section>
+  <section> 
+    <p>
+      <mat-toolbar>
+      </mat-toolbar>
+    </p>
+  </section>
 </div>
