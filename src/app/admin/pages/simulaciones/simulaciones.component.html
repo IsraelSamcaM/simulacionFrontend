@@ -1,4 +1,3 @@
-<!-- simulaciones.component.html -->
 <p>
   <mat-toolbar>
     <span>SIMULACIONES</span>
@@ -61,10 +60,33 @@
 
                 </div>
               </mat-tab>
+              <mat-tab label="Flujo antes de impuestos">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>Estimacion pesimista</mat-label>
+                      <input formControlName="FAIpesismista" matInput value="">
+                    </mat-form-field>
+                  </div>
+      
+                  <div class="col-sm-4">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>Estimacion probable</mat-label>
+                      <input formControlName='FAIprobable' matInput value="">
+                    </mat-form-field>
+                  </div>
+      
+                  <div class="col-sm-4">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>Estimacion optimista</mat-label>
+                      <input formControlName='FAIoptimista' matInput value="">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
             </mat-tab-group>       
           </div>
         </div>
-
         <!-- Tasa de Inflacion -->
         <div class="card w-100">
           <div class="card-body">
@@ -203,96 +225,114 @@
             </mat-tab-group>
           </div>
         </div>
+        <div class="card w-100">
+          <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>Cantidad de Iteraciones</mat-label>
+                      <input formControlName="cantidadIteraciones" matInput value="">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-4">
+                    <mat-form-field appearance="fill" class="example-full-width">
+                      <mat-label>Tasa de Impuestos</mat-label>
+                      <input formControlName="tasaImpuestos" matInput value="">
+                    </mat-form-field>
+                  </div>
+                    <div class="col-sm-4">
+                      <button mat-raised-button color="primary" mat-button [disabled]="FormSimulacion.invalid"
+                          (click)="calcularValoresSimulados()">Calcular TIR's</button>
+                    </div>
+                </div>  
+          </div>
+        </div>
       </div>
-
       <div class="col-sm-4">
         <!-- Activo Fijo de Inicial -->
         <div class="card w-150">
           <div class="card-body">
             <h4 class="card-title">Datos de entrada Simulados</h4>
-            <div class="row">
-
-              <div class="col-sm-12">
-                <mat-form-field appearance="fill" class="example-full-width">
-                  <mat-label>Activo Fijo Inicial Simulado</mat-label>
-                  <input formControlName="AFsimulado" matInput value="">
-                </mat-form-field>
-              </div>
-            </div>
-
+            
             <div class="row">
               <div class="col-sm-12">
                 <mat-form-field appearance="fill" class="example-full-width">
-                  <mat-label>Activo Circulante Simulado</mat-label>
-                  <input formControlName="ACsimulado" matInput value="">
+                  <mat-label>TIR Minima</mat-label>
+                  <input formControlName="TIRminima" matInput value="">
                 </mat-form-field>
               </div>
             </div>
-
-            <mat-tab-group>
-              <mat-tab label="Año1"> 
-                <div class="row">
-                  <div class="col-sm-12">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                      <mat-label>Tasa de Inflacion Simulado</mat-label>
-                      <input formControlName="TAIsimulado1" matInput value="">
-                    </mat-form-field>
-                  </div>
-                </div> 
-              </mat-tab>
-              <mat-tab label="Año2">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                      <mat-label>Tasa de Inflacion Simulado</mat-label>
-                      <input formControlName="TAIsimulado2" matInput value="">
-                    </mat-form-field>
-                  </div>
-                </div>
-              </mat-tab>
-              <mat-tab label="Año3">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                      <mat-label>Tasa de Inflacion Simulado</mat-label>
-                      <input formControlName="TAIsimulado3" matInput value="">
-                    </mat-form-field>
-                  </div>
-                </div>  
-              </mat-tab>
-              <mat-tab label="Año4">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                      <mat-label>Tasa de Inflacion Simulado</mat-label>
-                      <input formControlName="TAIsimulado4" matInput value="">
-                    </mat-form-field>
-                  </div>
-                </div>
-              </mat-tab>
-              <mat-tab label="Año5">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <mat-form-field appearance="fill" class="example-full-width">
-                      <mat-label>Tasa de Inflacion Simulado</mat-label>
-                      <input formControlName="TAIsimulado5" matInput value="">
-                    </mat-form-field>
-                  </div>
-                </div>
-              </mat-tab>
-              
-            </mat-tab-group>
-
-
             <div class="row">
               <div class="col-sm-12">
-                <button mat-raised-button color="primary" mat-button [disabled]="FormSimulacion.invalid"
-                    (click)="calcularValoresSimulados()">Simular Valores</button>
+                <mat-form-field appearance="fill" class="example-full-width">
+                  <mat-label>TIR Maxima</mat-label>
+                  <input formControlName="TIRmaxima" matInput value="">
+                </mat-form-field>
               </div>
             </div>
+            <div class="row">
+              <div class="col-sm-12">
+                
+                  <button mat-raised-button color="warn" mat-button [disabled]="FormSimulacion.invalid"
+                  (click)="simular()">SIMULAR</button>
+                
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
   </form>
+  <p>
+    <mat-toolbar>
+      <span>TABLA DE TIR's SIMULADOS</span>
+    </mat-toolbar>
+  </p>
+  <div class="row">
+    <section class="example-container mat-elevation-z8" tabindex="0">
+      <table mat-table [dataSource]="dataSource">
+    
+        <ng-container matColumnDef="numIntervalo">
+          <th mat-header-cell *matHeaderCellDef> No. Intervalo </th>
+          <td mat-cell *matCellDef="let element"> {{element.numIntervalo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="intervaloInferior">
+          <th mat-header-cell *matHeaderCellDef> Lim. Inferior </th>
+          <td mat-cell *matCellDef="let element"> {{element.intervaloInferior}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="intervaloSuperior">
+          <th mat-header-cell *matHeaderCellDef> Lim Superior </th>
+          <td mat-cell *matCellDef="let element"> {{element.intervaloSuperior}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="frecuencia">
+          <th mat-header-cell *matHeaderCellDef> Frecuencia </th>
+          <td mat-cell *matCellDef="let element"> {{element.frecuencia}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="porcentaje">
+          <th mat-header-cell *matHeaderCellDef> Porcentaje </th>
+          <td mat-cell *matCellDef="let element"> {{(element.porcentaje) }} %</td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </section>
+  </div>
+  <p>
+    <mat-toolbar>
+      <span>GRAFICA</span>
+    </mat-toolbar>
+  </p>
+  <mat-divider></mat-divider>
+  <canvas id= "chart2"> {{chart}}</canvas>
+  <p>
+    <mat-toolbar>
+      
+    </mat-toolbar>
+  </p>
 </div>
