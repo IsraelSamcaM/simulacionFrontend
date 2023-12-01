@@ -1,5 +1,5 @@
 <!-- Hero Banner-->
-<section class="hero-home bg-cover bg-center" [ngStyle]="{ 'background': 'url(assets/img/fondo.jpg) center ' + (scrollOffset / 2) + 'px', 'background-size': 'cover' }">
+<section class="hero-home bg-cover bg-center" [ngStyle]="{ 'background': 'url(assets/img/fondo_oficial.jpg) center ' + (scrollOffset / 2) + 'px', 'background-size': 'cover' }">
     <div class="container index-forward py-5 mb-5 overlay">
       <div class="row text-white">
         <div class="col-lg-8">
@@ -27,8 +27,10 @@
         </div>
         <div class="col-lg-3 d-flex justify-content-center align-items-center">
             <div class="px-4">
-                <a href="assets/pdfs/simulacion_libro.pdf" target="_blank">
-                    <button mat-raised-button color="primary">
+                <a href="https://drive.google.com/file/d/18HApWQbuwJVD7w3xrAng3YEhJ64IpjK4/view" target="_blank">
+                    <button mat-raised-button color="primary"
+                    matTooltip="Al hacer click se abrira una nueva pestaña con el respectivo libro"
+                    aria-label="Button that displays a tooltip when focused or hovered over">
                         <mat-icon>visibility</mat-icon> Visualizar libro
                     </button>
                 </a>
@@ -271,7 +273,7 @@
   <section class="services">
     <div class="row py-5 border-top border-md border-primary"></div>
     <div class="container text-center">
-      <h2 class="text-uppercase lined lined-center">VARIABLES Y DATOS  <span class="text">SIMULADOS Y DE SALIDA</span></h2>
+      <h2 class="text-uppercase lined lined-center">VARIABLES Y DATOS  <span class="text">SIMULADOS O DE SALIDA</span></h2>
       <p class="text-muted mb-5">
         Parámetros que influyen en el desarrollo y resultados del modelo propuesto durante la ejecución de la simulación.
         </p>
@@ -563,7 +565,7 @@
                                 <p> ✔️Descubrir si tu proyecto es rentable o no.</p>
 
                               <mat-action-row>
-                                <button mat-button color="primary" (click)="nextStep()">Next</button>
+                                <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
                               </mat-action-row>
                             </mat-expansion-panel>
                           
@@ -575,8 +577,8 @@
                               </mat-expansion-panel-header>
                               <p> ✔️Con explicaciones detalladas, garantizo que comprenderás cada aspecto de la simulación. Si tienes más dudas o deseas profundizar en algún tema, ¡este video es tu recurso perfecto!</p>
                               <mat-action-row>
-                                <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                                <button mat-button color="primary" (click)="nextStep()">Next</button>
+                                <button mat-button color="warn" (click)="prevStep()">Anterior</button>
+                                <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
                               </mat-action-row>
                             </mat-expansion-panel>
                           
@@ -588,8 +590,8 @@
                               </mat-expansion-panel-header>
                               <p class="text-muted mb-3"> ✔️Este video es solo el comienzo. Si tienes más preguntas o necesitas más detalles, te invito a seguir y ver el video completo. Obtendrás una comprensión más profunda y estarás listo para maximizar tus inversiones.</p>
                               <mat-action-row>
-                                <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                                <button mat-button color="primary" (click)="nextStep()">End</button>
+                                <button mat-button color="warn" (click)="prevStep()">Anterior</button>
+                                <button mat-button color="primary" (click)="nextStep()">Finalizar</button>
                               </mat-action-row>
                             </mat-expansion-panel>
                           

@@ -254,7 +254,10 @@
                   </div>
                     <div class="col-sm-4">
                       <button mat-raised-button color="primary" mat-button [disabled]="FormSimulacion.invalid"
-                          (click)="calcularValoresSimulados()">Calcular TIR's</button>
+                          (click)="calcularValoresSimulados()"
+                          matTooltip="Recuerda que es el primer paso para simular"
+                          aria-label="Button that displays a tooltip when focused or hovered over"
+                          >Calcular TIR's</button>
                     </div>
                 </div>  
           </div>
@@ -270,7 +273,7 @@
               <div class="col-sm-12">
                 <mat-form-field appearance="fill" class="example-full-width">
                   <mat-label>TIR Minima</mat-label>
-                  <input matInput>{{ FormSimulacion.get('TIRminima')?.value | number:'1.5-5' }}
+                  <input matInput readonly>{{ FormSimulacion.get('TIRminima')?.value | number:'1.5-5' }}
                 </mat-form-field>
               </div>
             </div>
@@ -278,7 +281,7 @@
               <div class="col-sm-12">
                 <mat-form-field appearance="fill" class="example-full-width">
                   <mat-label>TIR Maxima</mat-label>
-                  <input matInput>{{ FormSimulacion.get('TIRmaxima')?.value | number:'1.5-5' }}
+                  <input matInput readonly>{{ FormSimulacion.get('TIRmaxima')?.value | number:'1.5-5' }}
                 </mat-form-field>
               </div>
             </div>
@@ -286,7 +289,10 @@
               <div class="col-sm-12">
                 
                   <button mat-raised-button color="warn" mat-button [disabled]="FormSimulacion.invalid"
-                  (click)="simular()">SIMULAR</button>
+                  (click)="simular()"
+                  matTooltip="Al hacer click simularas tu proyecto de inversión"
+                  aria-label="Button that displays a tooltip when focused or hovered over"
+                  >SIMULAR</button>
                 
               </div>
             </div>

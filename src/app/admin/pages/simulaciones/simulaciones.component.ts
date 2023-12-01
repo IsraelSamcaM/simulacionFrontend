@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup , Validators} from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatDividerModule} from '@angular/material/divider';
 import {Chart} from 'chart.js/auto';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 
 @Component({
   selector: 'app-simulaciones',
@@ -16,7 +19,8 @@ export class SimulacionesComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   dataSourceAcum = new MatTableDataSource<any>([]);
 
-  FormSimulacion: FormGroup;  
+  FormSimulacion: FormGroup; 
+
   AFpesismista: number;
   AFprobable: number;
   AFoptimista: number;
@@ -42,12 +46,19 @@ export class SimulacionesComponent implements OnInit {
   TAIpesismista5: number;
   TAIprobable5:number;
   TAIoptimista5: number;
-
-
   AFsimulado: number;
   ACsimulado: number;
   FAIsimulado: number;
+  tasaImpuestos:number;
+  TIRminima: number;
+  TIRmaxima: number;
 
+  intervalos: any[]=[];
+  acumulados: any[]=[];
+
+  intervalosTIR: number[] = [];
+  FAIsimulados: number[] = [];
+  
   TAIsimulado1: number;
   TAIsimulado2: number;
   TAIsimulado3: number;
@@ -56,19 +67,12 @@ export class SimulacionesComponent implements OnInit {
   
   TAIsimulados: number[] = [];
 
-  tasaImpuestos:number;
-  TIRminima: number;
-  TIRmaxima: number;
-  intervalosTIR: number[] = [];
-  FAIsimulados: number[] = [];
-
   data: number[] = []
   data2: number[] = []
   labels: string[]=[]
 
   numeroIteraciones: number;
-  intervalos: any[]=[];
-  acumulados: any[]=[];
+  
 
   TREMA: number;
   alfa: number;
@@ -344,8 +348,8 @@ export class SimulacionesComponent implements OnInit {
           console.log("El proyecto se rechaza, la TIR nunca alcanza a la TREMA");
       }
 
-      console.log(this.labels)
-      console.log(this.data)
+      console.log(this.intervalos)
+      console.log(this.acumulados)
       this.dataSource = new MatTableDataSource(this.intervalos) 
       this.dataSourceAcum= new MatTableDataSource(this.acumulados) 
       //console.log("Todos los tir simulados: ");
@@ -354,7 +358,8 @@ export class SimulacionesComponent implements OnInit {
       if (this.chart) {
         this.chart.destroy();
       }
-      this.graficar()    
+      this.graficar() 
+      //this.pdfGenerar()   
   }
 
   iterar(estAF: number, estAC: number, estFAI: number[], estInfSimulados: number[], TasaImpuestos: number, TIRminima: number, TIRmaxima: number): number {
@@ -500,4 +505,46 @@ export class SimulacionesComponent implements OnInit {
         }
         //console.log(this.intervalosTIR)
   }
+  
+  pdfGenerar() {
+    const doc = new jsPDF();
+  
+    // Crea tu array de objetos
+    const intervalos = [
+      {
+        frecuencia: 15,
+        intervaloInferior: -0.034599999999999964,
+        intervaloSuperior: -0.024190000000000107,
+        numIntervalo: 1,
+        porcentaje: 1.5
+      },
+      // ... otros objetos
+    ];
+  
+    // Crea la tabla a partir del array de objetos
+    const tableData = [];
+    // Agrega la fila de encabezado
+    tableData.push(['Frecuencia', 'Intervalo Inferior', 'Intervalo Superior', 'Número de Intervalo', 'Porcentaje']);
+  
+    // Agrega las filas de datos
+    intervalos.forEach(intervalo => {
+      tableData.push([
+        intervalo.frecuencia,
+        intervalo.intervaloInferior,
+        intervalo.intervaloSuperior,
+        intervalo.numIntervalo,
+        intervalo.porcentaje
+      ]);
+    });
+  
+    // Genera la tabla en el documento (solo una vez)
+    autoTable(doc, {
+      head: tableData.slice(0, 1), // Encabezado
+      body: tableData.slice(1) // Cuerpo de la tabla
+    });
+  
+    // Guarda el documento como 'table.pdf'
+    doc.save('table.pdf');
+  }
+  
 }
