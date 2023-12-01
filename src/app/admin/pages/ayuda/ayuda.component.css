@@ -1,8 +1,4 @@
-.example-spacer {
-    flex: 1 1 auto;
-  }
-  
-  .titulo-pequeno {
+.titulo-pequeno {
     font-size: 11px; 
 }
 
@@ -24,8 +20,7 @@
 }
 
 .text {
-  color: rgb(63, 81, 181);
-        
+        color: rgb(63, 81, 181);
 }
 
 .contact {
@@ -42,10 +37,3 @@
     height: 100%;
     background-color: rgba(63, 81, 181, 0.4); 
   }
- .nombre_apellido{
-  font-size: 15px; 
- }
- .nombre_apellido2{
-  font-size: 15px; 
-  color: rgb(63, 81, 181);
- }

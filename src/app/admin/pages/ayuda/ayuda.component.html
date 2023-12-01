@@ -1,0 +1,610 @@
+<!-- Hero Banner-->
+<section class="hero-home bg-cover bg-center" [ngStyle]="{ 'background': 'url(assets/img/fondo.jpg) center ' + (scrollOffset / 2) + 'px', 'background-size': 'cover' }">
+    <div class="container index-forward py-5 mb-5 overlay">
+      <div class="row text-white">
+        <div class="col-lg-8">
+          <h1 class="text-uppercase mb-0 text-shadow">Apartado de ayuda</h1>
+          <p class="h5 my-4 text-shadow">Descubre cómo maximizar tus inversiones para un futuro financiero sólido</p>
+          <p>En esta sección podrás obtener los conocimientos de conceptos importantes que necesitas saber para simular tus proyectos de inversión.</p>
+        </div>
+      </div>
+    </div>
+</section>
+  
+  
+  <!-- Info Section-->
+  <section class="info p-0 bg-light">
+    <div class="container bg-white">
+      <div class="row py-5 border-top border-md border-primary">
+        <div class="col-lg-9 border-right mb-9 mb-lg-0">
+            <div class="px-4">
+                <h2 class="text-uppercase lined lined-center">PLANTEAMIENTO DEL EJERCICIO DE PROYECTO DE INVERSIÓN</h2>
+                <p  class="text-muted mb-0 text-small">
+                    El sistema empleado para simular uno o más proyectos de inversión se basa en el libro "Simulación - Un enfoque práctico" de Raúl Coss Bu, tomado específicamente desde la página 78. Se han seguido todos los pasos detallados en el libro para asegurar la creación de un sistema altamente confiable. Puede acceder al libro haciendo clic en el botón a su derecha. No obstante, para una comprensión más completa del proceso de simulación, también es crucial entender los conceptos que se describen a continuación:
+                </p>
+            </div>
+            
+        </div>
+        <div class="col-lg-3 d-flex justify-content-center align-items-center">
+            <div class="px-4">
+                <a href="assets/pdfs/simulacion_libro.pdf" target="_blank">
+                    <button mat-raised-button color="primary">
+                        <mat-icon>visibility</mat-icon> Visualizar libro
+                    </button>
+                </a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+ 
+  <!-- Estimaciones Section-->
+  <section class="services">
+    <div class="container text-center">
+      <h2 class="text-uppercase lined lined-center">LAS  <span class="text">ESTIMACIONES</span></h2>
+      <p class="text-muted mb-5">
+        Una estimación es una evaluación anticipada y cuantitativa de los posibles resultados futuros relacionados con una variable específica. Se compone de tres escenarios clave:
+        </p>
+        <div class="row">
+            <!-- Valor pesimista-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Valor pesimista
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                            Este es el valor que adquiere una variable en el peor de los casos, siempre es un valor que va en detrimento de la inversión. Puede ser un egreso muy alto, un ingreso muy bajo, o una tasa de inflación muy elevada.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor más probable-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Valor más probable
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                            Este es un valor que tiene una alta probabilidad de repetirse o acercarse al valor real que tendrá una variable. Es un punto de equilibrio entre el valor pesimista y optimista, aunque no siempre es la media aritmética. Es un valor de referencia que se acerca a la realidad, mejor que el pesimista pero no tan bueno como el optimista.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor optimista-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Valor optimista
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                            Este es el valor que adquiere una variable en el mejor de los casos, siempre es un valor que favorece la inversión. Puede ser un egreso bajo, un ingreso alto, o una tasa de inflación pequeña.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+  </section>
+  <!-- Variables de entrada Section-->
+  <section class="services">
+    <div class="row py-5 border-top border-md border-primary"></div>
+    <div class="container text-center">
+      <h2 class="text-uppercase lined lined-center">DATOS DE  <span class="text">ENTRADA</span></h2>
+      <p class="text-muted mb-5">
+        Las variables de entrada en simulación son parámetros iniciales que influyen en el desarrollo y resultados del modelo propuesto.
+        </p>
+        <div class="row">
+            <!-- Valor AF-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    AF/Activo Fijo
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                                Esta es la inversión inicial del proyecto, indica la cantidad monetaria que se gastará como inversión. Al ser un valor de egreso, es decir que sale de caja, se representa con números negativos, y como tal los números más bajos o alejados de cero representan un mayor gasto, y los números más altos o cercanos a cero representan un menor gasto
+                            </p>
+                            </mat-expansion-panel>
+                          </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor AC-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    AC/Activo Circulante
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>Este es un valor que se añadirá a la inversión de manera constante año tras año, a partir del siguiente año realizada la inversión. Puede representar cuotas de alquiler, costes de mantenimiento, expensas o cualquier otro gasto que sea constante en cada año. Al igual que el activo fijo es un egreso, y se representa con números negativos.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor FAI-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    FAI/Flujo antes de impuestos
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                            Estos son los ingresos o ganancias en bruto que se recibirá por nuestra inversión año tras año, NO se les aplica ningún tipo de descuento, inflación o impuesto. Al ser ingresos se representan con números positivos, siendo los más pequeños o cercanos a cero una menor ganancia, y los más grandes o alejados de cero una mayor ganancia.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <div style="margin: 15px;"></div>
+        <div class = "row">
+             <!-- Valor TAI-->
+             <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Tasa de inflación
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                            Es un conjunto de valores que cambia su probabilidad cada año. Estos valores nos indican la proporción o porcentaje de devaluación de la moneda al final del año respecto al inicio del mismo. Estos valores se manejan de manera anti-intuitiva, siendo que un porcentaje más alto es más perjudicial que un valor más bajo.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor TI-->
+            <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Tasa de impuestos
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                            Es un porcentaje de descuento que se aplica a las ganancias generadas, que se debe pagar en todos los negocios legítimos como aporte al estado para la administración regional. Varía entre 0 y 1.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor TREMA-->
+            <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title class="titulo-pequeno">
+                                    TREMA/Tasa de Retorno Mínima Atractiva
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                            Es un porcentaje o proporción que nos indica qué porcentaje de ganancia debe generar la inversión para que la misma sea rentable. Es un valor que es calculado y proporcionado por los cargos administrativos para los que un inversor trabaja. 
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor NumIteraciones-->
+            <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Número de iteraciones
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                            Es la cantidad de veces que se simulará la TIR, a mayor número de iteraciones se obtendrá un mayor nivel de precisión en los cálculos sobre rentabilidad, pero esto también incrementará el coste y tiempo computacional. Se recomienda optar por un valor entre 100 y 100.000 iteraciones para observar el comportamiento de la inversión a diferentes niveles de detalle.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  <!-- Datos de entrada Section-->
+  <section class="services">
+    <div class="row py-5 border-top border-md border-primary"></div>
+    <div class="container text-center">
+      <h2 class="text-uppercase lined lined-center">VARIABLES Y DATOS  <span class="text">SIMULADOS Y DE SALIDA</span></h2>
+      <p class="text-muted mb-5">
+        Parámetros que influyen en el desarrollo y resultados del modelo propuesto durante la ejecución de la simulación.
+        </p>
+        <div class="row">
+            <!-- Valor AF-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    VPN/Valor Presente Neto
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                                Es la ganancia que se generará gracias a la inversión realizada. La misma se calcula a través de las otras variables proporcionadas, ajustando por impuestos y tomando en cuenta el valor de retorno de la inversión. Es un valor interno que requiere de la TIR para ser calculado.
+                            </p>
+                            </mat-expansion-panel>
+                          </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor AC-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    TIR/Tasa Interna de Retorno
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                                Es un porcentaje o proporción que nos indica el interés que deben tener los flujos de efectivo después de impuestos tal que el VPN sea igual a 0, es decir el punto de equilibrio entre pérdidas y ganancias. Este es el valor principal a simular durante el programa, y es el que se compara con la TREMA, y de superarla en un 90% de las veces el proyecto se considera rentable.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor FAI-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    TIR Mínima
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p>
+                                Es el valor de la TIR que se calcula en el peor de los casos, considerando los valores de todas las variables como pesimistas, no hay una TIR más baja posible con los parámetros proporcionados.
+                            </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <div style="margin: 15px;"></div>
+        <div class = "row">
+             <!-- Valor TAI-->
+             <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    TIR Máxima
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                                    Es el valor de la TIR que se calcula en el mejor de los casos, considerando los valores de todas las variables como optimistas, no hay una TIR más alta posible con los parámetros proporcionados.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor TI-->
+            <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Intervalos de la simulación
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                                    Son 20 intervalos que se calculan a partir de la TIR mínima y máxima, siempre la TIR que se simule estará en uno de estos 20 intervalos. Los mismos se utilizan para definir la incidencia de la TIR en diferentes áreas de la distribución, siendo esta incidencia el factor principal que defina si el proyecto es rentable o no.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor TREMA-->
+            <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title class="titulo-pequeno">
+                                    Tabla y gráfico de TIR simulada por intervalos
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                                    En la tabla se muestra la incidencia de la TIR simulada en los distintos intervalos, dando el intervalo inferior, el intervalo superior, el número de incidencia y el porcentaje que representa. Debajo está la gráfica que representa el comportamiento descrito.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor NumIteraciones-->
+            <div class="col-xl-3 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Tabla y gráfico de TIR acumulada
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p>
+                                    En la tabla se muestra la cantidad de TIR simuladas en total hasta el intervalo denotado. Muestra el total de TIR simuladas en el intervalo actual más todos los intervalos anteriores. La gráfica muestra la información y comportamiento correspondiente.
+                                </p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  <div style="margin: 15px;"></div>
+  <!-- Contact Section-->
+  <section class="contact py-5  text-white">
+    <div class="container">
+      <h2 class="text-uppercase lined lined-center">COMO <span class="text-black">SIMULAR</span></h2>
+        <div class="row text-white">
+            <p>Ya que tienes los conocimientos de los conceptos claros podras simular tu proyecto de inversión, siguiendo los cuatro pasos del siguiente ejemplo: </p>
+          </div>
+      <div class="row">
+        <div class="col-xl-12 col-md-12 mb-12 mb-xl-0">
+            <div class="card services-item border-0">
+                <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                    <mat-stepper orientation="vertical">
+                        <mat-step>
+                          <ng-template matStepLabel>PASO 1 </ng-template>
+                          <ng-template matStepContent>
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                  <div mat-card-avatar class="example-header-image"></div>
+                                  <mat-card-subtitle>LLENAR EL FORMULARIO DE DATOS CORRECTOS</mat-card-subtitle>
+                                </mat-card-header>
+                                <div style="margin: -10px;"></div>
+                                <img mat-card-image class="imagen-limitada" src="assets/img/paso1.jpg" alt="Photo of paso 1">
+                                <mat-card-content>
+                                    <div style="margin: 10px;"></div>
+                                  <p>
+                                    El formulario debe completarse de manera integral y precisa con los valores necesarios. Una vez llenado correctamente, proceda a presionar el botón "Calcular TIR's".
+                                  </p>
+                                </mat-card-content>
+                              </mat-card>
+                            <button mat-button matStepperNext>Siguiente</button>
+                          </ng-template>
+                        </mat-step>
+                        <mat-step>
+                          <ng-template matStepLabel>PASO 2</ng-template>
+                          <ng-template matStepContent>
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                  <div mat-card-avatar class="example-header-image"></div>
+                                  <mat-card-subtitle>REALIZAR LA SIMULACION</mat-card-subtitle>
+                                </mat-card-header>
+                                <div style="margin: -10px;"></div>
+                                <img mat-card-image class="imagen-limitada" src="assets/img/paso2.jpg" alt="Photo of paso 2">
+                                <mat-card-content>
+                                    <div style="margin: 10px;"></div>
+                                  <p>
+                                    Una vez completado el paso anterior, notará que los campos de la sección "TIR Extremos Simulados" ya cuentan con los valores necesarios para llevar a cabo la simulación. En este segundo paso, simplemente presione el botón "SIMULAR".
+                                  </p>
+                                </mat-card-content>
+                              </mat-card>
+                            <button mat-button matStepperPrevious>Anterior</button>
+                            <button mat-button matStepperNext>Siguiente</button>
+                          </ng-template>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>PASO 3</ng-template>
+                            <ng-template matStepContent>
+                              <mat-card class="example-card">
+                                  <mat-card-header>
+                                    <div mat-card-avatar class="example-header-image"></div>
+                                    <mat-card-subtitle>REVISAR LOS RESULTADOS SIMULADOS EN TABLA Y GRÁFICA</mat-card-subtitle>
+                                  </mat-card-header>
+                                  <div style="margin: -10px;"></div>
+                                  <img mat-card-image class="imagenes" src="assets/img/paso3.1.jpg" alt="Photo of paso 31">
+                                  <img mat-card-image class="imagenes" src="assets/img/paso3.2.jpg" alt="Photo of paso 32">
+                                  <img mat-card-image class="imagenes" src="assets/img/paso3.3.jpg" alt="Photo of paso 33">
+                                  <mat-card-content>
+                                      <div style="margin: 10px;"></div>
+                                    <p>
+                                        Una vez completado el paso dos, podrá observar la ejecución de la simulación realizada con los datos que ingresó inicialmente. También tendrá acceso a la distribución en los intervalos de las TIRs simuladas, así como al comportamiento de estas TIRs en el gráfico que refleja ambas tablas.
+                                    </p>
+                                  </mat-card-content>
+                                </mat-card>
+                              <button mat-button matStepperPrevious>Anterior</button>
+                              <button mat-button matStepperNext>Siguiente</button>
+                            </ng-template>
+                          </mat-step>
+                        <mat-step>
+                          <ng-template matStepLabel>PASO 4 </ng-template>
+                          <mat-card class="example-card">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-subtitle>INTERPRETACIÓN DE LA CONCLUSIÓN</mat-card-subtitle>
+                            </mat-card-header>
+                            <div style="margin: -10px;"></div>
+                            <img mat-card-image class="imagenes" src="assets/img/paso4.jpg" alt="Foto del Paso 4">
+                            <mat-card-content>
+                                <div style="margin: 10px;"></div>
+                                <p>
+                                    En el ejemplo llevado a cabo con los pasos, se deduce de la simulación que la inversion del proyecto no será rentable, lo que implica que será rechazado. Por ende, aparecerá el mensaje anterior.
+                                </p>
+                                <div style="margin: -10px;"></div>
+                                <img mat-card-image class="imagenes" src="assets/img/paso5.jpg" alt="Foto del Paso 5">
+                                <div style="margin: 10px;"></div>
+                                <p>
+                                    Caso contrario cuando la inversion del proyecto es rentable, lo que implica que NO será rechazado. Por ende, aparecerá el mensaje anterior.
+                                </p>
+                                <div style="margin: -10px;"></div>
+                                <p>
+                                    Si deseas volver a simular tu proyecto de inversión, simplemente modifica los valores en el formulario y sigue con el paso 1 en adelante.
+                                </p>
+                            </mat-card-content>
+                            </mat-card>
+                            
+                          <button mat-button matStepperPrevious>Anterior</button>
+                        </mat-step>
+                      </mat-stepper>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+   <!-- Estimaciones Section-->
+   <div style="margin: 15px;"></div>
+   <section class="services">
+    <div class="container">
+        <div class="row">
+            <!-- Valor pesimista-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <h2 class="text-uppercase lined lined-center">Tutorial<span class="text">Paso a Paso</span></h2>
+                        <p class="text-muted mb-5">
+                            ¡Bienvenido al tutorial definitivo sobre simulación de inversiones! En este video, te guiaré a través de los conceptos clave necesarios para simular tus proyectos de inversión de manera efectiva. Desde el llenado correcto del formulario hasta la interpretación de los resultados simulados, cada paso se explica de manera clara y concisa.
+                        </p>
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    🔍 Lo Que Aprenderás:
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                                <p> ✔️ Llenar el formulario con datos precisos.</p>
+                                <p> ✔️ Realizar la simulación paso a paso.</p>
+                                <p> ✔️ Interpretar resultados en tablas y gráficos.</p>
+                                <p> ✔️Descubrir si tu proyecto es rentable o no.</p>
+
+                              <mat-action-row>
+                                <button mat-button color="primary" (click)="nextStep()">Next</button>
+                              </mat-action-row>
+                            </mat-expansion-panel>
+                          
+                            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    💡 Conceptos Claros:
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p> ✔️Con explicaciones detalladas, garantizo que comprenderás cada aspecto de la simulación. Si tienes más dudas o deseas profundizar en algún tema, ¡este video es tu recurso perfecto!</p>
+                              <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                                <button mat-button color="primary" (click)="nextStep()">Next</button>
+                              </mat-action-row>
+                            </mat-expansion-panel>
+                          
+                            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    🚀 ¿Qué Sigue Después?
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <p class="text-muted mb-3"> ✔️Este video es solo el comienzo. Si tienes más preguntas o necesitas más detalles, te invito a seguir y ver el video completo. Obtendrás una comprensión más profunda y estarás listo para maximizar tus inversiones.</p>
+                              <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                                <button mat-button color="primary" (click)="nextStep()">End</button>
+                              </mat-action-row>
+                            </mat-expansion-panel>
+                          
+                          </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor más probable-->
+            <div class="col-xl-8 col-md-8  mb-8 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <iframe width="620" height="350" src="https://www.youtube.com/embed/EfcjvxOqh9o?si=_Zgki4pPK8sk9atu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>

@@ -8,6 +8,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { InversionesComponent } from './pages/inversiones/inversiones.component';
 import { InversionesDialogComponent } from './dialogs/inversiones-dialog/inversiones-dialog.component';
 import { SimulacionesComponent } from './pages/simulaciones/simulaciones.component';
+import { AyudaComponent } from './pages/ayuda/ayuda.component';
 
 
 
@@ -17,6 +18,7 @@ import { SimulacionesComponent } from './pages/simulaciones/simulaciones.compone
     InversionesComponent,
     InversionesDialogComponent,
     SimulacionesComponent,
+    AyudaComponent,
 
      
   ],

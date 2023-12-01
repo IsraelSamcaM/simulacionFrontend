@@ -1,62 +1,158 @@
-
-<p>
-    <mat-toolbar>
-        <span>INVERSIONES REGISTRADAS</span>
-        <span class="example-spacer"></span>
-        <button (click)="add()" mat-icon-button class="example-icon favorite-icon"
-            aria-label="Example icon-button with heart icon">
-            <mat-icon>add</mat-icon>
-        </button>
-        
-    </mat-toolbar>
-</p>
-
-<div class="container-fluid"> 
-    <div class="example-container mat-elevation-z8">
-        <div class="example-table-container">
-            <table mat-table [dataSource]="dataSource">
-                <ng-container matColumnDef="nombreInversion">
-                    <th mat-header-cell *matHeaderCellDef> Nombre Inversion</th>
-                    <td mat-cell *matCellDef="let element"> {{ element?.nombreInversion}} </td>
-                </ng-container >
-                
-                <ng-container matColumnDef="inicialFijoPesimista">
-                    <th mat-header-cell *matHeaderCellDef> Inicial</th>
-                    <td mat-cell *matCellDef="let element"> {{element?.inicialFijoPesimista }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="inicialFijoProbable">
-                    <th mat-header-cell *matHeaderCellDef> Circulante </th>
-                    <td mat-cell *matCellDef="let element"> {{element?.inicialFijoProbable}} </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="inicialFijoOptimista">
-                    <th mat-header-cell *matHeaderCellDef> Tasa de Inflacion </th>
-                    <td mat-cell *matCellDef="let element"> {{element?.inicialFijoOptimista}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="options">
-                    <th mat-header-cell *matHeaderCellDef>Opciones</th>
-                    <td mat-cell *matCellDef="let element">
-                      <div style="display: flex; align-items: center;">
-                        <button (click)="Edit(element)" mat-icon-button>
-                          <mat-icon style="color: royalblue;">edit</mat-icon>
-                        </button>
-
-                        <button (click)="delete(element)" mat-icon-button>
-                            <mat-icon style="color: red;">delete</mat-icon>
-                        </button>
-                      </div>
-                    </td>
-                </ng-container>
-                                
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No data matching the filter </td>
-                </tr>
-            </table>
+<!-- Hero Banner-->
+<section class="hero-home bg-cover bg-center" [ngStyle]="{ 'background': 'url(assets/img/fondo.jpg) center ' + (scrollOffset / 2) + 'px', 'background-size': 'cover' }">
+    <div class="container index-forward py-5 mb-5 overlay">
+      <div class="row text-white">
+        <div class="col-lg-8">
+          <h1 class="text-uppercase mb-0 text-shadow">TALLER DE SIMULACION DE SISTEMAS</h1>
+          <div style="margin: 50px;"></div>
+          <p>
+            Desarrollar competencias en simulación de sistemas para analizar y optimizar el rendimiento en entornos complejos, preparando estudiantes para diversos campos profesionales.
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+  
+  
+  <!-- Info Section-->
+  <section class="info p-0 bg-light">
+    <div style="margin: -25px;"></div>
+    <div class="container bg-white">
+        <div class="row py-5 border-top border-md border-primary">
+            <div class="col-lg-6 border-right mb-6 mb-lg-0 d-flex align-items-center">
+                <div class="px-4 text-center">
+                    <h2 class="text-uppercase lined lined-center nombre_apellido">Lic. Henrry Frank <span class="nombre_apellido2">Villarroel Tapia</span></h2>
+                    <p class="text-muted mb-0 text-small">
+                        Docente de Taller de simulacion de sistemas
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                <div class="col-xl-6 col-md-6 mb-6 mb-xl-0">
+                    <div class="card services-item border-0">
+                        <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                            <mat-card class="example-card" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                                <div style="border-radius: 50%; overflow: hidden; width: 200px; height: 200px; margin: 10px;">
+                                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    <div style="margin: -25px;"></div>
+  </section>
+ 
+  <!--Section Integrantes-->
+  <section class="services">
+    <div style="margin: -20px;"></div>
+    <div class="row py-5 border-top border-md border-primary"></div>
+    <div class="container text-center">
+      <h2 class="text-uppercase lined lined-center">NUESTROS  <span class="text">INTEGRANTES</span></h2>
+      <p class="text-muted mb-5">
+        "Nos definimos como un equipo de estudiantes apasionados, cada uno con un enfoque único en diversos campos de estudio. Nos unimos con entusiasmo para llevar a cabo el proyecto del curso 'Taller de Simulación de Sistemas'. Este desafío no solo nos permite aplicar nuestros conocimientos, sino que también nos impulsa a colaborar, crecer y explorar nuevas oportunidades en este viaje estudiantil. Estamos emocionados por el impacto que podemos lograr juntos."
+        </p>
+        <div class="row">
+            <!-- Valor AF-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-card class="example-card" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                            <mat-card-header>
+                              <mat-card-title>
+                                <h2 class="text-uppercase lined lined-center nombre_apellido">Est. jose israel <span class="nombre_apellido2">Samca montaño</span></h2>
+                              </mat-card-title>
+                            </mat-card-header>
+                            <div style="border-radius: 50%; overflow: hidden; width: 200px; height: 200px; margin: 10px;">
+                              <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor AC-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-card class="example-card" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                            <mat-card-header>
+                              <mat-card-title>
+                                <h2 class="text-uppercase lined lined-center nombre_apellido">Est. karen lizbeth <span class="nombre_apellido2">torrico conde</span></h2>
+                              </mat-card-title>
+                            </mat-card-header>
+                            <div style="border-radius: 50%; overflow: hidden; width: 200px; height: 200px; margin: 10px;">
+                              <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <!-- Valor FAI-->
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-card class="example-card" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                            <mat-card-header>
+                              <mat-card-title>
+                                <h2 class="text-uppercase lined lined-center nombre_apellido">Est. alejandro <span class="nombre_apellido2">cayola montaño</span></h2>
+                              </mat-card-title>
+                            </mat-card-header>
+                            <div style="border-radius: 50%; overflow: hidden; width: 200px; height: 200px; margin: 10px;">
+                              <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 15px;"></div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-card class="example-card text-center">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h2 class="text-uppercase lined lined-center nombre_apellido">Est. ezequiel <span class="nombre_apellido2">gerstel bodoha</span></h2>
+                                </mat-card-title>
+                            </mat-card-header>
+                            <div style="border-radius: 50%; overflow: hidden; width: 200px; height: 200px; margin: 10px; margin: 0 auto;">
+                                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+                <div class="card services-item border-0">
+                    <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                        <mat-card class="example-card text-center">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h2 class="text-uppercase lined lined-center nombre_apellido">Est. jose israel <span class="nombre_apellido2">Samca montaño</span></h2>
+                                </mat-card-title>
+                            </mat-card-header>
+                            <div style="border-radius: 50%; overflow: hidden; width: 200px; height: 200px; margin: 10px; margin: 0 auto;">
+                                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  <div style="margin: 15px;"></div>
+  <!-- Contact Section-->
+  <section class="contact py-4  text-white">
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="text-white text-center">
+            <p>TALLER DE SIMULACIÓN DE SISTEMAS - UNIVERSIDAD MAYOR DE SAN SIMON</p>
+        </div>
+    </div>
+  </section>
+   <!-- Estimaciones Section-->
+   
