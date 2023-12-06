@@ -5,8 +5,9 @@
 /tmp
 /out-tsc
 /bazel-out
-
+/src/assets/pdfs/*
 # Node
+
 /node_modules
 npm-debug.log
 yarn-error.log

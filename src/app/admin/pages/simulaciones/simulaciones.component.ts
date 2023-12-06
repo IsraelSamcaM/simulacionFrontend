@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef,AfterViewInit} from '@angular/core';
 import { FormBuilder, FormGroup , Validators} from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatDividerModule} from '@angular/material/divider';
 import {Chart} from 'chart.js/auto';
-import jsPDF from 'jspdf'
+import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 
 
@@ -13,7 +13,7 @@ import autoTable from 'jspdf-autotable'
   styleUrls: ['./simulaciones.component.css']
 })
 export class SimulacionesComponent implements OnInit {
-
+  @ViewChild('chartCanvas') chartCanvas: ElementRef;
   displayedColumns = ['numIntervalo' ,'intervaloInferior','intervaloSuperior','frecuencia','porcentaje']
   displayedColumnsAcum = ['numIntervalo' ,'intervaloInferior','intervaloSuperior','frecuencia acumulada','porcentaje']
   dataSource = new MatTableDataSource<any>([]);
@@ -46,12 +46,21 @@ export class SimulacionesComponent implements OnInit {
   TAIpesismista5: number;
   TAIprobable5:number;
   TAIoptimista5: number;
-  AFsimulado: number;
-  ACsimulado: number;
-  FAIsimulado: number;
+
+  numeroIteraciones: number;
+
+  TREMA: number;
+  alfa: number;
+  aprobado: boolean = true;
+  simulado: boolean = false;
+  
   tasaImpuestos:number;
   TIRminima: number;
   TIRmaxima: number;
+
+  AFsimulado: number;
+  ACsimulado: number;
+  FAIsimulado: number;
 
   intervalos: any[]=[];
   acumulados: any[]=[];
@@ -70,14 +79,8 @@ export class SimulacionesComponent implements OnInit {
   data: number[] = []
   data2: number[] = []
   labels: string[]=[]
+  labels2: string[]=[]
 
-  numeroIteraciones: number;
-  
-
-  TREMA: number;
-  alfa: number;
-  aprobado: boolean = true;
-  simulado: boolean = false;
 
   constructor(private fb: FormBuilder) {
     
@@ -126,13 +129,21 @@ export class SimulacionesComponent implements OnInit {
   }
 
   public chart: Chart;
+
   ngOnInit(): void{
     
   }
 
-  graficar(){
+  ngAfterViewInit() {
+    const chartCanvas = this.chartCanvas.nativeElement;
+  }
+
+  graficar(generarPDFAutomatically: boolean = false) {
+    if (this.chart) {
+      this.chart.destroy();
+    }
     const data = {
-      labels: this.labels,
+      labels: this.labels2,
       datasets: [{
         label: 'Porcentaje de TIRs simulados por intervalos',
         data: this.data,
@@ -149,11 +160,20 @@ export class SimulacionesComponent implements OnInit {
       },
       ]
     };
-    
-    this.chart =  new Chart("chart2",{
+  
+    this.chart = new Chart("chart2", {
       type: 'line',
-      data
-    })
+      data,
+      options: {
+        animation: {
+          onComplete: () => {
+            if (generarPDFAutomatically) {
+              this.pdfGenerar();
+            }
+          }
+        }
+      }
+    });
   }
 
    
@@ -286,6 +306,7 @@ export class SimulacionesComponent implements OnInit {
         this.clasificarTIR(frecuenciaPorIntervalo, this.intervalosTIR, TIRsimuladas[i]);
       }
 
+
       let frecuenciaAcumulada: number[] = new Array(20);
       for (let i = 0; i < 20; i++) {
           if (i === 0) {
@@ -314,11 +335,13 @@ export class SimulacionesComponent implements OnInit {
       for (let i = 0; i < 20; i++) {
         const porcentaje: number = (frecuenciaAcumulada[i] / this.numeroIteraciones) * 100;
         numInteracion++;
+        const frecuenciaAcumuladaActual = i === 0 ? frecuenciaPorIntervalo[i] : frecuenciaPorIntervalo.slice(0, i + 1).reduce((a, b) => a + b, 0);
+  
         const acumuladoObj = {
             numIntervalo: numInteracion,
             intervaloInferior: this.intervalosTIR[i],
             intervaloSuperior: this.intervalosTIR[i + 1],
-            frecuencia: frecuenciaPorIntervalo[i],
+            frecuencia: frecuenciaAcumuladaActual,
             porcentaje: porcentaje
         };
         // console.log(
@@ -358,8 +381,11 @@ export class SimulacionesComponent implements OnInit {
       if (this.chart) {
         this.chart.destroy();
       }
-      this.graficar() 
+      this.llenarLabels(3);
+      console.log(this.labels2)
+      this.graficar(false) 
       //this.pdfGenerar()   
+      //console.log(this.intervalosTIR)
   }
 
   iterar(estAF: number, estAC: number, estFAI: number[], estInfSimulados: number[], TasaImpuestos: number, TIRminima: number, TIRmaxima: number): number {
@@ -505,46 +531,160 @@ export class SimulacionesComponent implements OnInit {
         }
         //console.log(this.intervalosTIR)
   }
-  
-  pdfGenerar() {
-    const doc = new jsPDF();
-  
-    // Crea tu array de objetos
-    const intervalos = [
-      {
-        frecuencia: 15,
-        intervaloInferior: -0.034599999999999964,
-        intervaloSuperior: -0.024190000000000107,
-        numIntervalo: 1,
-        porcentaje: 1.5
-      },
-      // ... otros objetos
+
+  llenarLabels(decimales: number): void {
+    this.labels2 = [
+      `[${this.intervalosTIR[0].toFixed(decimales)}, ${
+        this.intervalosTIR[1].toFixed(decimales)
+      }]`,
     ];
-  
-    // Crea la tabla a partir del array de objetos
-    const tableData = [];
-    // Agrega la fila de encabezado
-    tableData.push(['Frecuencia', 'Intervalo Inferior', 'Intervalo Superior', 'Número de Intervalo', 'Porcentaje']);
-  
-    // Agrega las filas de datos
-    intervalos.forEach(intervalo => {
-      tableData.push([
-        intervalo.frecuencia,
-        intervalo.intervaloInferior,
-        intervalo.intervaloSuperior,
-        intervalo.numIntervalo,
-        intervalo.porcentaje
-      ]);
-    });
-  
-    // Genera la tabla en el documento (solo una vez)
-    autoTable(doc, {
-      head: tableData.slice(0, 1), // Encabezado
-      body: tableData.slice(1) // Cuerpo de la tabla
-    });
-  
-    // Guarda el documento como 'table.pdf'
-    doc.save('table.pdf');
+    for (let i = 1; i < this.intervalosTIR.length - 1; i++) {
+      this.labels2.push(`[${this.intervalosTIR[i].toFixed(decimales)}, ${
+        this.intervalosTIR[i + 1].toFixed(decimales)
+      }]`);
+    }
   }
+  
+
+  
+  
+pdfGenerar() {
+  const doc = new jsPDF();
+  doc.setFontSize(18);
+  doc.setTextColor(0, 0, 255); 
+  doc.text('REPORTE DE SIMULACIÓN DE PROYECTO DE INVERSIÓN', 16, 22);
+
+  const fechaCreacion = new Date().toLocaleDateString();
+  doc.setFontSize(10);
+  doc.setTextColor(0); 
+  doc.text(`Creado: ${fechaCreacion}`, 170, 10); 
+
+ 
+  autoTable(doc, {
+    theme: 'striped',
+    head: [['Parametros de entrada utizados:']],
+    startY: 30,
+  })
+
+  autoTable(doc, {
+    theme: 'grid',
+    head: [['Variable','Estimación pesimista', 'Estimación probable', 'Estimación optimista']],
+    body: [
+      ['Activo fijo inicial',this.AFpesismista, this.AFprobable, this.AFoptimista],
+      ['Activo circulante inicial',this.ACpesismista, this.ACprobable, this.ACoptimista],
+      ['Flujo antes de impuestos',this.FAIpesismista, this.FAIprobable, this.FAIoptimista],
+    ],
+  })
+
+  autoTable(doc, {
+    theme: 'striped',
+    head: [['Parametros de tasa de inflación utilizados']],
+  })
+  autoTable(doc, {
+    theme: 'grid',
+    head: [['Año','Estimación pesimista', 'Estimación probable', 'Estimación optimista']],
+    body: [
+      ['1',this.TAIpesismista1, this.TAIprobable1, this.TAIoptimista1],
+      ['2',this.TAIpesismista2, this.TAIprobable2, this.TAIoptimista2],
+      ['3',this.TAIpesismista3, this.TAIprobable3, this.TAIoptimista3],
+      ['4',this.TAIpesismista4, this.TAIprobable4, this.TAIoptimista4],
+      ['5',this.TAIpesismista5, this.TAIprobable5, this.TAIoptimista5],
+    ],
+  })
+
+  autoTable(doc, {
+    theme: 'plain',
+    head: [['TIR extremos calculados:']],
+  })
+  
+  autoTable(doc, {
+    theme: 'grid',
+    head: [[ 'TIR maxima', 'TIR minima']],
+    body: [
+      [ this.TIRmaxima, this.TIRminima],
+      
+    ],
+  })
+  autoTable(doc, {
+    theme: 'striped',
+    head: [['Parametros de entrada extras utlizados:']],
+  })
+  autoTable(doc, {
+    theme: 'grid',
+    head: [['Cantidad de interaciones','% Impuestos', 'TREMA', 'Alfa']],
+    body: [
+      [this.numeroIteraciones,this.tasaImpuestos, this.TREMA, this.alfa],
+      
+    ],
+  })
+
+  autoTable(doc, {
+    theme: 'plain',
+    head: [['Tabla de TIR Simulados por Intervalos:']],
+  })
+
+  const intervalos = this.intervalos;
+  const tableData1 = [];
+  tableData1.push(['Número de Intervalo', 'Intervalo Inferior', 'Intervalo Superior', 'Frecuencia', 'Porcentaje']);
+  intervalos.forEach(intervalo => {
+    tableData1.push([
+      intervalo.numIntervalo,
+      intervalo.intervaloInferior,
+      intervalo.intervaloSuperior,
+      intervalo.frecuencia,
+      intervalo.porcentaje
+    ]);
+  });
+  autoTable(doc, {
+    head: tableData1.slice(0, 1),
+    body: tableData1.slice(1),
+  });
+
+
+  autoTable(doc, {
+    theme: 'plain',
+    head: [['Tabla de TIR acumulada simulados:']],
+  })
+  
+  const acumulados = this.acumulados;
+  const tableData2 = [];
+  
+  tableData2.push(['Número de Intervalo', 'Intervalo Inferior', 'Intervalo Superior', 'Frecuencia acumulada', 'Porcentaje acumulado']);
+  acumulados.forEach(acumulado => {
+    tableData2.push([
+      acumulado.numIntervalo,
+      acumulado.intervaloInferior,
+      acumulado.intervaloSuperior,
+      acumulado.frecuencia,
+      acumulado.porcentaje
+    ]);
+  });
+  autoTable(doc, {
+    head: tableData2.slice(0, 1),
+    body: tableData2.slice(1),
+  });
+
+  autoTable(doc, {
+    theme: 'striped',
+    head: [['Grafico resultante de la simulacion realizada:']],
+  })
+
+  const chartCanvas = this.chartCanvas.nativeElement;
+  const chartImage = chartCanvas.toDataURL('image/png');
+  doc.addImage(chartImage, 'png', 10, 100, 190, 80); 
+  
+
+  
+  const mensaje = this.aprobado ? 'PROYECTO DE INVERSIÓN APROBADO' : 'PROYECTO DE INVERSIÓN NO APROBADO';
+  const colorMensaje = this.aprobado ? {r: 0, g: 128, b: 0} : {r: 255, g: 0, b: 0}; // Verde si aprobado, rojo si no aprobado
+  doc.setFontSize(16);
+  doc.setTextColor(colorMensaje.r, colorMensaje.g, colorMensaje.b);
+  doc.text(mensaje, 50, 200);
+
+  
+    
+  doc.save(`SimulationReport${fechaCreacion}.pdf`);
+}
+
   
 }

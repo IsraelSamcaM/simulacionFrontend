@@ -124,7 +124,7 @@
         </p>
         <div class="row">
             <!-- Valor AF-->
-            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+            <div class="col-xl-3 col-md-3 mb-3 mb-xl-0">
                 <div class="card services-item border-0">
                     <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
                         <mat-accordion>
@@ -144,7 +144,7 @@
                 </div>
             </div>
             <!-- Valor AC-->
-            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+            <div class="col-xl-3 col-md-3 mb-3 mb-xl-0">
                 <div class="card services-item border-0">
                     <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
                         <mat-accordion>
@@ -162,8 +162,27 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-md-3 mb-3 mb-xl-0">
+              <div class="card services-item border-0">
+                  <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
+                      <mat-accordion>
+                          <mat-expansion-panel (opened)="panelOpenState = true"
+                                               (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                FAI/Flujo antes de impuestos
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p>
+                            Estos son los ingresos o ganancias en bruto que se recibirá por nuestra inversión año tras año, NO se les aplica ningún tipo de descuento, inflación o impuesto. Al ser ingresos se representan con números positivos, siendo los más pequeños o cercanos a cero una menor ganancia, y los más grandes o alejados de cero una mayor ganancia.
+                          </p>
+                          </mat-expansion-panel>
+                      </mat-accordion>
+                  </div>
+              </div>
+            </div>
             <!-- Valor FAI-->
-            <div class="col-xl-4 col-md-4 mb-4 mb-xl-0">
+            <div class="col-xl-3 col-md-3 mb-3 mb-xl-0">
                 <div class="card services-item border-0">
                     <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
                         <mat-accordion>
@@ -171,18 +190,17 @@
                                                  (closed)="panelOpenState = false">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    FAI/Flujo antes de impuestos
+                                  Tasa de inflación
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
                               <p>
-                            Estos son los ingresos o ganancias en bruto que se recibirá por nuestra inversión año tras año, NO se les aplica ningún tipo de descuento, inflación o impuesto. Al ser ingresos se representan con números positivos, siendo los más pequeños o cercanos a cero una menor ganancia, y los más grandes o alejados de cero una mayor ganancia.
+                            Es un conjunto de valores que cambia su probabilidad cada año. Estos valores nos indican la proporción o porcentaje de devaluación de la moneda al final del año respecto al inicio del mismo. Estos valores se manejan de manera anti-intuitiva, siendo que un porcentaje más alto es más perjudicial que un valor más bajo.
                             </p>
                             </mat-expansion-panel>
                         </mat-accordion>
                     </div>
-                </div>
+               </div>
             </div>
-           
         </div>
         <div style="margin: 15px;"></div>
         <div class = "row">
@@ -195,11 +213,10 @@
                                                  (closed)="panelOpenState = false">
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Tasa de inflación
+                                  Alfa
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
-                                <p>
-                            Es un conjunto de valores que cambia su probabilidad cada año. Estos valores nos indican la proporción o porcentaje de devaluación de la moneda al final del año respecto al inicio del mismo. Estos valores se manejan de manera anti-intuitiva, siendo que un porcentaje más alto es más perjudicial que un valor más bajo.
+                                <p>Es el valor de confianza de la simulación. Para evaluar si un proyecto es rentable o no, se comprueba si la TIR simulada es superior a la TREMA en un Alfa % de las veces. Valores recomendados para esta variable son: 0.9 o 90%, 0.95 o 95%, y 0.99 o 99%.
                                 </p>
                             </mat-expansion-panel>
                         </mat-accordion>
@@ -603,7 +620,7 @@
             <div class="col-xl-8 col-md-8  mb-8 mb-xl-0">
                 <div class="card services-item border-0">
                     <div class="card-body border-top border-md border-primary py-4 px-3 shadow-sm">
-                        <iframe width="620" height="350" src="https://www.youtube.com/embed/EfcjvxOqh9o?si=_Zgki4pPK8sk9atu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                      <iframe width="590" height="325" src="https://www.youtube.com/embed/83bfkqlLsn0?si=YTmjDliRnZbSsdCZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
